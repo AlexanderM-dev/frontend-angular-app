@@ -1,0 +1,82 @@
+<div class="container">
+
+    <div class="input-product-list">
+
+        <mat-form-field class="input">
+            <input type="text" matInput placeholder="Search product..." [(ngModel)]="productNameValue"
+                (keydown.esc)="productNameValue=''" autocomplete="off" [disabled]='!products.length'>
+            <button mat-button *ngIf="productNameValue" matSuffix mat-icon-button aria-label="Clear"
+                (click)="productNameValue=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    
+        <mat-list class="products-list" *ngIf="products.length; else noProducts">
+            <mat-list-item class="product-block" matRipple
+                *ngFor="let product of products | searchProduct: productNameValue" (click)="getProductId(product.id)" [ngClass]="{
+                    'selected-product': productId === product.id
+                }">
+                <div>{{product.name}}</div>
+            </mat-list-item>
+        </mat-list>
+    
+        <ng-template #noProducts>
+            <div class="products-list">
+                <p class="text">There is no products</p>
+            </div>
+        </ng-template>
+
+    </div>
+
+    <div *ngIf="isAdmin" class="products-edit">
+
+        <div class="btns">
+            <button class="btn" mat-raised-button (click)="togglePanelAdd()"
+                [ngClass]="{'add-active': panelOpenState1}">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button class="btn" mat-raised-button (click)="togglePanelChange()" [disabled]='!productId'
+                [ngClass]="{'change-active': panelOpenState2}">
+                <mat-icon>autorenew</mat-icon>
+            </button>
+            <button class="btn" mat-raised-button (click)="deleteProduct()" [disabled]='!productId'>
+                <mat-icon>clear</mat-icon>
+            </button>
+        </div>
+
+        <mat-expansion-panel class="expansion-panel" [expanded]="panelOpenState1 || panelOpenState2">
+
+            <mat-form-field class="expansion-panel-field" *ngIf="panelOpenState1">
+                <input type="text" matInput placeholder="Enter new product name" [(ngModel)]="newProductNameValue"
+                    (keydown.esc)="newProductNameValue=''" (keydown.enter)="addNewProduct()" autocomplete="off"
+                    [formControl]="productFormControl">
+                <button mat-button *ngIf="newProductNameValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="newProductNameValue=''">
+                    <mat-icon style="color: red;">close</mat-icon>
+                </button>
+                <button mat-button *ngIf="newProductNameValue && productFormControl.valid" matSuffix mat-icon-button
+                    aria-label="Clear" (click)="addNewProduct()">
+                    <mat-icon style="color: green;"><strong>done</strong></mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field class="expansion-panel-field" *ngIf="panelOpenState2">
+                <input type="text" matInput placeholder="Change product name" [(ngModel)]="newProductNameValue"
+                    (keydown.esc)="newProductNameValue=''" (keydown.enter)="changeProduct()" autocomplete="off"
+                    [formControl]="productFormControl">
+                <button mat-button *ngIf="newProductNameValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="newProductNameValue=''">
+                    <mat-icon style="color: red;">close</mat-icon>
+                </button>
+                <button mat-button *ngIf="newProductNameValue && productFormControl.valid" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="changeProduct()">
+                    <mat-icon style="color: green;"><strong>done</strong></mat-icon>
+                </button>
+            </mat-form-field>
+
+        </mat-expansion-panel>
+
+    </div>
+
+
+</div>

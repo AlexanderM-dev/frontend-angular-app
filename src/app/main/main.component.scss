@@ -1,0 +1,65 @@
+.wrapper {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(235, 235, 235);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .layout {
+        display: flex;
+        height: 90%;
+        overflow: hidden;
+        width: 95%;
+        max-width: 1300px;
+        background-color: white;
+        border: 1px solid rgb(199, 199, 199);
+        border-radius: 10px;
+        box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+        min-width: 600px;
+        min-height: 460px;
+        position: relative;
+
+        .logout {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 10px;
+            box-shadow: 0 1px 1px -1px rgba(0,0,0,.2), 0 0px 0px 0 rgba(0,0,0,.14), 0 1px 0px 0 rgba(0,0,0,.12);
+
+        }
+
+        .product-list {
+            width: 40%;
+            height: 100%;
+            padding-top: 40px;
+            padding-left: 40px;
+        }
+
+        .subscription {
+            width: 45%;
+            height: 38%;
+            padding-top: 40px;
+            padding-left: 60px;
+
+            .register-user {
+                margin-top: 10px;
+                margin-left: 25%;
+                width: 100%;
+            }
+        }
+
+        .noSelected {
+            width: 45%;
+            margin-top: 3.5%;
+            margin-left: 11.5%;
+        }
+
+    }
+}
+
+

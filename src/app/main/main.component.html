@@ -1,0 +1,32 @@
+<div class="wrapper">
+
+    <div class="layout">
+
+        <button class="logout" mat-stroked-button (click)='logout()'>Logout</button>
+
+        <div class="product-list">
+            <app-product-list></app-product-list>
+        </div>
+
+        <div *ngIf="selectedProductId; else noSelected" class="subscription">
+            <app-subscription></app-subscription>
+
+            <div *ngIf="companyAdmin && !isAdmin" class="register-user">
+                <app-register-user></app-register-user>
+            </div>
+            
+        </div>
+
+        <ng-template #noSelected>
+            <div class="noSelected">
+                <h3>Select product for subscription informantion...</h3>
+                <div *ngIf="companyAdmin && !isAdmin">
+                    <app-register-user></app-register-user>
+                </div>
+                
+            </div>
+        </ng-template>
+
+    </div>
+
+</div>

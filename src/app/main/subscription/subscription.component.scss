@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    min-height: 330px;
+
+    .select {
+        width: 100%;
+    }
+
+    .thisCompany {
+        height: 60px;
+        background-color: rgb(241, 241, 241);
+        border-bottom: 1px solid rgb(161, 161, 161);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    h2 {
+        text-align: center;
+        color: rgb(84, 84, 84);
+    }
+
+    .subInfo {
+        margin-top: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        color: rgb(84, 84, 84);
+
+        .subscription-edit {
+            margin-top: 20px;
+            width: 100%;
+            
+            .btns {
+                display: flex;
+                width: 100%;
+                margin-top: 10px;
+                justify-content: space-between;
+        
+                .btn {
+                    width: 30%;
+                    height: 40px;
+                    
+                    &.add-active {
+                        border: 1px solid green;
+                    }
+        
+                    &.change-active {
+                        border: 1px solid yellow;
+                    }
+            
+                    &.remove-active {
+                        border: 1px solid red;
+                    }
+                }
+        
+            }
+
+            mat-form-field {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .exp-pan {
+                margin-top: 10px;
+                height: 30%;
+
+                .btns {
+                    // margin-top: 50px;
+                    width: 100%;
+
+                    .btn {
+                        width: 50%;
+
+                        &.add-active {
+                            border: 1px solid green;
+                        }
+            
+                        &.change-active {
+                            border: 1px solid yellow;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .noSelected {
+        margin-left: 10px;
+        color: rgb(84, 84, 84);
+    }
+
+    
+    
+}

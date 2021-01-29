@@ -1,0 +1,63 @@
+.login-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(235, 235, 235);
+
+        .login-window {
+            background-color: white;
+            height: 100%;
+            width: 90%;
+            max-width: 600px;
+            min-width: 270px;
+            max-height: 530px;
+            min-height: 320px;
+            border: 1px solid rgb(199, 199, 199);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+            position: relative;
+
+            &.login-window-fail {
+                border: 2px solid red;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 120px;
+            }
+
+            .error-message {
+                position: absolute;
+                bottom: 100px;
+                font-size: 14px;
+                color: red;
+            }
+
+            .login-inputs {
+                width: 100%;
+            
+                .input {
+                    width: 100%;
+                    margin-bottom: 5px;
+                  }
+              }
+
+            .btn-login {
+                width: 100%;
+                margin-bottom: 14px;
+                margin-top: 133px;
+            }
+
+            .btn-register {
+                width: 100%;
+                background-color: rgb(110, 110, 139);
+            }
+        }
+}
+
+
+  
+  

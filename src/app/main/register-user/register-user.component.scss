@@ -1,0 +1,66 @@
+.register-user-wrapper {
+
+    .btn-toggle {
+
+        .btn {
+            width: 100%;
+            background-color: rgb(110, 110, 139);
+            color: white;
+        }
+    }
+
+    .exp-panel {
+        position: relative;
+        margin-top: 10px;
+
+        &.exp-pan-success {
+            border: 2px solid green;
+       }
+
+        &.exp-pan-fail {
+            border: 2px solid red;
+        }
+
+        .error-message {
+            position: absolute;
+            bottom: 2px;
+            left: 34px;
+            font-size: 14px;
+            color: red;
+            text-align: center;
+        }
+
+        .register-user-inputs {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            padding: 10px;
+    
+            .btns {
+                margin-top: 10px;
+                width: 100%;
+                
+                .btn {
+                    width: 50%;
+                    
+                    &:disabled {
+                        .material-icons {
+                            color: gray !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        .user-registered {
+            
+            h2 {
+                text-align: center;
+                color: green;
+                margin-top: 140px;
+            }
+        }
+    }
+
+
+}

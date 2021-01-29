@@ -1,0 +1,96 @@
+.container {
+    height: 100% ;
+    min-height: 330px;
+
+    .input-product-list{
+        height: calc(94% - 105px);
+        min-height: 330px;
+        border-radius: 4px;
+        box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+
+
+        .input {
+            height: 56px;
+            width: 96%;
+            padding: 1% 2% 0 2%;
+            background-color: rgb(241, 241, 241);
+            border-bottom: 1px solid rgb(163, 161, 161);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+    
+        .products-list {
+            padding: unset;
+            height: calc(100% - 62px);
+            overflow: auto;
+    
+            &::-webkit-scrollbar {
+                width: 0px;
+                }
+    
+            .product-block {
+                width: 100%;
+                height: 50px;
+                border-bottom: 1px solid rgb(201, 201, 201);
+                // border-bottom-left-radius: 10px;
+    
+                &.selected-product {
+                    background-color:rgba(211, 211, 211, 0.5);
+                }
+    
+                &:hover {
+                    background-color: rgb(235, 235, 235);
+                }
+            }
+    
+            .text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                margin-top: 30%;
+            }
+        }
+        
+    }
+    
+    .products-edit {
+        height: 95px;
+        width: 100%;
+        
+        .btns {
+            height: 40px;
+            display: flex;
+            width: 100%;
+            margin-top: 10px;
+            justify-content: space-between;
+    
+            .btn {
+                width: 30%;
+                height: 40px;
+                
+                &:hover {
+                    background-color: rgb(235, 235, 235);
+                }
+                
+                &.add-active {
+                    border: 1px solid green;
+                }
+    
+                &.change-active {
+                    border: 1px solid yellow;
+                }
+            }
+        }
+
+        .expansion-panel {
+            width: 100%;
+            margin-top: 5px;
+            max-height: 50px;
+            
+            .expansion-panel-field {
+                width: 100%;
+            }
+        }
+    }
+}
