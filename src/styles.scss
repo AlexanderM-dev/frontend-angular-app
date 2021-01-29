@@ -19,8 +19,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
-.exp-panel {
-    .mat-expansion-panel-body {
-        height: 314px;
+.register-user-wrapper{
+    .exp-panel {
+        .mat-expansion-panel-body {
+            max-height: 305px;
+            overflow: auto;
+        }
     }
 }
