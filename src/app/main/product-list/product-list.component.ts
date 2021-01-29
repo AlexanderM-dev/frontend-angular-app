@@ -14,29 +14,6 @@ export interface IProduct {
 })
 export class ProductListComponent implements OnInit {
 
-  // products: IProduct[] = [
-  //   { name: 'windows' },
-  //   { name: 'linux' },
-  //   { name: 'IOS' },
-  //   { name: 'Android' },
-  //   { name: 'windows' },
-  //   { name: 'linux' },
-  //   { name: 'IOS' },
-  //   { name: 'Android' },
-  //   { name: 'windows' },
-  //   { name: 'linux' },
-  //   { name: 'IOS' },
-  //   { name: 'Android' },
-  //   { name: 'windows' },
-  //   { name: 'linux' },
-  //   { name: 'IOS' },
-  //   { name: 'Android' },
-  //   { name: 'windows' },
-  //   { name: 'linux' },
-  //   { name: 'IOS' },
-  //   { name: 'Android' },
-  // ];
-
   products: IProduct[] = [];
 
   panelOpenState1 = false;
@@ -57,8 +34,12 @@ export class ProductListComponent implements OnInit {
     private api: ApiService
   ) { }
 
-  ngOnInit(): void {
-    this.getProductList();
+  ngOnInit(): void {    
+    if (this.isAdmin) {
+      this.getProductList();
+    } else {
+      this.products = [{id: 1, name: 'Hello1'}, {id: 2, name: 'Hello2'}, {id: 3, name: 'Hello3'}]
+    }
   }
 
   togglePanelAdd(): void {
@@ -129,7 +110,6 @@ export class ProductListComponent implements OnInit {
   getProductId(id: number): void {
     this.api.productIdValue$.next(id);
     this.productId = id;
-    console.log(this.productId);
   }
 
   deleteProduct(): void {

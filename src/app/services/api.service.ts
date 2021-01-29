@@ -48,6 +48,25 @@ export interface ICompany {
   inn: string;
 }
 
+export interface ISubCheckResponse {
+  id: number;
+  active: boolean;
+  activeUntill?: string;
+  wasActiveUntill?: string;
+}
+
+export interface ISubscription {
+  startDate: string;
+  endDate: string;
+  companyId: string;
+  productId: string;
+}
+
+export interface ISubscriptionChange {
+  startDate: string;
+  endDate: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +79,7 @@ export class ApiService {
 
   constructor(public http: HttpClient) { }
 
+// Auth
   login(user: ILogin): Observable<HttpResponse<ILoginResponse>> {
     return this.http.post<ILoginResponse>('http://localhost:3000/api/v1.1.0/auth/login', user,
       { observe: 'response' });
@@ -75,6 +95,7 @@ export class ApiService {
       { observe: 'response' });
   }
 
+// Products
   getAllProductsToAdmin(): Observable<{ allProducts: IProduct[] }> {
     return this.http.get<{ allProducts: IProduct[] }>('http://localhost:3000/api/v1.1.0/product');
   }
@@ -91,10 +112,30 @@ export class ApiService {
     return this.http.delete<IStandartResponse>(`http://localhost:3000/api/v1.1.0/product/${id}`);
   }
 
+// Companies
   getAllCompaniesToAdmin(): Observable<{ allCompanies: ICompany[] }> {
     return this.http.get<{ allCompanies: ICompany[] }>('http://localhost:3000/api/v1.1.0/company');
   }
 
-  subscriptionCheck() {}
+// Subscription
+  checkSubscriptionByAdmin(productId: string, companyId: string): Observable<ISubCheckResponse> {
+    return this.http.get<ISubCheckResponse>(`http://localhost:3000/api/v1.1.0/subscription/admin?productId=${productId}&companyId=${companyId}`);
+  }
+
+  checkSubscription(productId: string): Observable<ISubCheckResponse> {
+    return this.http.get<ISubCheckResponse>(`http://localhost:3000/api/v1.1.0/subscription/?productId=${productId}`);
+  }
+
+  addSubscription(newSub: ISubscription): Observable<IStandartResponse> {
+    return this.http.post<IStandartResponse>('http://localhost:3000/api/v1.1.0/subscription', newSub)
+  }
+
+  changeSubscription(newSubValue: ISubscriptionChange, subId: number): Observable<IStandartResponse> {
+    return this.http.put<IStandartResponse>(`http://localhost:3000/api/v1.1.0/subscription/${subId}`, newSubValue);
+  }
+
+  deleteSubscription(subId: number): Observable<IStandartResponse> {
+    return this.http.delete<IStandartResponse>(`http://localhost:3000/api/v1.1.0/subscription/${subId}`);
+  }
 
 }

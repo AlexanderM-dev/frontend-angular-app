@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
@@ -7,7 +7,7 @@ import { ApiService } from '../services/api.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   companyAdmin = localStorage.getItem('companyAdmin');
   isAdmin = localStorage.getItem('isAdmin');
@@ -20,9 +20,15 @@ export class MainComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.selectedProductId = false;
     this.api.productIdValue$.subscribe(id => {
       this.selectedProductId = id;
     })
+  }
+
+  ngOnDestroy(): void {
+    this.selectedProductId = false;
+    this.api.productIdValue$.next(false);
   }
 
   logout(): void {

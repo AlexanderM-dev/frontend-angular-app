@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ApiService, ICompany } from 'src/app/services/api.service';
+import { ApiService, ICompany, ISubCheckResponse } from 'src/app/services/api.service';
 
-export interface ISub {
-  active: boolean;
-  activeUntill?: string;
-  wasActiveUntill?: string;
-}
 
 @Component({
   selector: 'app-subscription',
   templateUrl: './subscription.component.html',
   styleUrls: ['./subscription.component.scss']
 })
-export class SubscriptionComponent implements OnInit {
+export class SubscriptionComponent implements OnInit, OnDestroy {
 
   panelOpenState1 = false;
   panelOpenState2 = false;
@@ -30,11 +25,7 @@ export class SubscriptionComponent implements OnInit {
   selectedCompanyId = '';
 
   // статус подписки и дата окончания
-  subInfo: ISub | undefined
-  = {
-    active: true,
-    activeUntill: '2021-11-26T21:00:00.000Z',
-  };
+  subInfo: ISubCheckResponse | undefined
 
   range = new FormGroup({
     start: new FormControl(),
@@ -43,10 +34,24 @@ export class SubscriptionComponent implements OnInit {
 
   constructor(
     private api: ApiService
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.getCompanyList();
+    if (this.isAdmin) {
+      this.getCompanyList();
+      this.api.productIdValue$.subscribe(() => {
+        this.selectedCompanyId = '';
+      })
+    }
+  }
+
+  ngOnDestroy() {
+    this.selectedCompanyId = '';
+    this.companies = [];
+    this.companyName = '';
+    this.subInfo = undefined;
   }
 
   togglePanelAdd(): void {
@@ -66,17 +71,18 @@ export class SubscriptionComponent implements OnInit {
     });
   }
 
-  addNewSub(rangeValueStart: Date, rangeValueEnd: Date): void {
-    this.panelOpenState1 = false;
-    console.log('adding new sub');
-    console.log(rangeValueStart, rangeValueEnd);
-  }
-
-  changeSub(rangeValueStart: Date, rangeValueEnd: Date): void {
-    this.panelOpenState2 = false;
-    console.log('changing sub');
-    console.log(rangeValueStart, rangeValueEnd);
-  }
+  validateDate(date: Date) {
+    const year = `${date.getFullYear()}`;
+    let mounth = `${date.getMonth()+1}`;
+    let day = `${date.getDate()}`;
+    if (+mounth < 10) {
+      mounth = `0${date.getMonth()+1}`
+    }
+    if (+day < 10) {
+      day = `0${date.getDate()}`
+    }
+    return `${year}-${mounth}-${day}`
+  };
 
   getCompanyList(): void {
     if (this.isAdmin) {
@@ -85,6 +91,8 @@ export class SubscriptionComponent implements OnInit {
           next: (response) => {
             this.companies = response.allCompanies;
             this.companies = this.companies.sort((a: ICompany, b: ICompany) => a.id - b.id);
+            // по нулевому индексу компания администратора, поэтому убираем её из массива компаний
+            this.companies.splice(0, 1)
           },
           error: (err) => {
             console.log(err);
@@ -93,9 +101,72 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  getCompanyId(id: string): void {
-    this.selectedCompanyId = id;
-    console.log(this.selectedCompanyId);
+  getSubInfo(companyId: string): void {
+    this.panelOpenState2 = false;
+    this.panelOpenState1 = false;
+    this.selectedCompanyId = companyId;
+    const productId = String(this.api.productIdValue$.getValue());
+    this.api.checkSubscriptionByAdmin(productId, companyId)
+    .subscribe({
+      next: (response) => {
+        this.subInfo = response; 
+      },
+      error: (err) => {
+        console.log(err.error.message);
+        this.subInfo = undefined;
+      }
+    });
+     
   }
 
+  addNewSub(rangeValueStart: Date, rangeValueEnd: Date): void {
+    this.panelOpenState1 = false;
+    const productId = String(this.api.productIdValue$.getValue());
+        
+    this.api.addSubscription({
+      startDate: this.validateDate(rangeValueStart),
+      endDate: this.validateDate(rangeValueEnd),
+      companyId: this.selectedCompanyId,
+      productId: productId
+    }).subscribe({
+      next: (response) => {
+        this.getSubInfo(this.selectedCompanyId)
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+    
+  }
+
+  changeSub(rangeValueStart: Date, rangeValueEnd: Date): void {
+    this.panelOpenState2 = false;
+
+    if (this.subInfo) {
+      this.api.changeSubscription({
+        startDate: this.validateDate(rangeValueStart),
+        endDate: this.validateDate(rangeValueEnd)
+      }, this.subInfo.id).subscribe({
+        next: (response) => {
+          this.getSubInfo(this.selectedCompanyId)
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    }
+  }
+
+  deleteSub(): void {
+    if (this.subInfo) {
+      this.api.deleteSubscription(this.subInfo.id).subscribe({
+        next: (response) => {
+          this.getSubInfo(this.selectedCompanyId)
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    }
+  }
 }
