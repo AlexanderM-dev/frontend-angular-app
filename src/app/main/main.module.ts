@@ -16,7 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { SearchPipe } from '../services/search.pipe';
 import { InterceptorService } from '../services/interceptor.service';
-import { MainComponent } from './main.component';
+import { EditAdminComponent, MainComponent } from './main.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
@@ -33,6 +33,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ProductListComponent,
     SubscriptionComponent,
     RegisterUserComponent,
+    EditAdminComponent,
     SearchPipe
   ],
   imports: [

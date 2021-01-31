@@ -1,0 +1,53 @@
+.register-window {
+
+    h1 {
+        text-align: center;
+    }
+
+    .success {
+        text-align: center;
+        color: green;
+        margin-top: 200px;
+        margin-bottom: 177px;
+        font-size: 30px;
+    }
+
+
+    .register-inputs {
+        width: 100%;
+
+        .input {
+            width: 100%;
+            margin-bottom: 5px;
+          }
+      }
+
+}
+
+.btns {
+    width: 100%;
+    margin-bottom: 0px;
+
+    .error-message {
+        font-size: 14px;
+        color: red;
+    }
+
+
+    .btn-edit-app-admin {
+        width: 100%;
+        margin-top: 22px;
+    }
+    
+    .cancel {
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 0px;
+        background-color: rgb(110, 110, 139);
+        
+    }
+}
+
+
+  
+  
