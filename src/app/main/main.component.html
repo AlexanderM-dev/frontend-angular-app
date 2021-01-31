@@ -2,6 +2,7 @@
 
     <div class="layout">
 
+        <button *ngIf="isAdmin" class="editAdmin" mat-stroked-button (click)='editAdminParams()'>Edit Admin</button>
         <button class="logout" mat-stroked-button (click)='logout()'>Logout</button>
 
         <div class="product-list">

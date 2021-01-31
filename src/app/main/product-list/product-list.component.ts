@@ -24,6 +24,7 @@ export class ProductListComponent implements OnInit {
 
 
   isAdmin = localStorage.getItem('isAdmin');
+  isCompanyAdmin = localStorage.getItem('companyAdmin');
 
   productFormControl = new FormControl('', [
     Validators.required,
@@ -34,11 +35,11 @@ export class ProductListComponent implements OnInit {
     private api: ApiService
   ) { }
 
-  ngOnInit(): void {    
-    if (this.isAdmin) {
+  ngOnInit(): void {
+    if (this.isAdmin || this.isCompanyAdmin) {
       this.getProductList();
     } else {
-      this.products = [{id: 1, name: 'Hello1'}, {id: 2, name: 'Hello2'}, {id: 3, name: 'Hello3'}]
+      this.getProductListForUser();
     }
   }
 
@@ -93,11 +94,26 @@ export class ProductListComponent implements OnInit {
   }
 
   getProductList(): void {
-    if (this.isAdmin) {
+    if (this.isAdmin || this.isCompanyAdmin) {
       this.api.getAllProductsToAdmin()
         .subscribe({
           next: (response) => {
             this.products = response.allProducts;
+            this.products = this.products.sort((a: IProduct, b: IProduct) => a.id - b.id);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+    }
+  }
+
+  getProductListForUser(): void {
+    if (!this.isAdmin || !this.isCompanyAdmin) {
+      this.api.getAllProductsToUser()
+        .subscribe({
+          next: (response) => {
+            this.products = response.allUserProducts;
             this.products = this.products.sort((a: IProduct, b: IProduct) => a.id - b.id);
           },
           error: (err) => {
@@ -124,5 +140,4 @@ export class ProductListComponent implements OnInit {
       });
     }
   }
-
 }

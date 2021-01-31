@@ -3,7 +3,7 @@
     <mat-form-field *ngIf="isAdmin; else thisCompany" class="select" appearance="fill">
         <mat-label>Select company</mat-label>
         <mat-select [(value)]="selectedCompanyId">
-            <mat-option *ngFor="let company of companies" value={{company.id}} (click)="getSubInfo(selectedCompanyId)">{{company.name}}</mat-option>
+            <mat-option *ngFor="let company of companies" value={{company.id}} (click)="getSubInfoByAdmin(selectedCompanyId)">{{company.name}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -31,7 +31,7 @@
 
         <ng-template #noSub>
             <div>
-                <p>There is no subscription for this company</p>
+                <p>There is no subscription for product</p>
             </div>
         </ng-template>
 

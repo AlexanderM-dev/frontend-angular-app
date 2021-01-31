@@ -35,7 +35,14 @@ export class MainComponent implements OnInit, OnDestroy {
     localStorage.removeItem('token');
     localStorage.removeItem('companyAdmin');
     localStorage.removeItem('isAdmin');
+    // cId = company Id
+    localStorage.removeItem('cId');
+
     this.router.navigate(['/login']);
+  }
+
+  editAdminParams(): void {
+    
   }
 
 }

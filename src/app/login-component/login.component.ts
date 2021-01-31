@@ -52,6 +52,10 @@ export class LoginComponent implements OnInit {
               localStorage.setItem('isAdmin', String(response.body.isAdmin));
             }
 
+            if (!response.body.isAdmin) {
+              localStorage.setItem('cId', String(response.body.companyId));
+            }
+
             localStorage.setItem('token', response.body.token);
 
             this.fail = false;

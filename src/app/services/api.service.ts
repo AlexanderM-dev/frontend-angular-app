@@ -25,6 +25,7 @@ export interface ILogin {
 
 export interface ILoginResponse {
   token: string;
+  companyId: number;
   companyAdmin: boolean;
   isAdmin: boolean;
 }
@@ -74,7 +75,6 @@ export interface ISubscriptionChange {
 export class ApiService {
 
   productIdValue$: BehaviorSubject<number | boolean> = new BehaviorSubject<number | boolean>(false);
-
   token = localStorage.getItem('token');
 
   constructor(public http: HttpClient) { }
@@ -95,9 +95,17 @@ export class ApiService {
       { observe: 'response' });
   }
 
+  editAppAdmin(appAdmin: IRegisterCompanyAdmin): Observable<IStandartResponse> {
+    return this.http.put<IStandartResponse>('http://localhost:3000/api/v1.1.0/auth/renameappadmin', appAdmin);
+  }
+
 // Products
   getAllProductsToAdmin(): Observable<{ allProducts: IProduct[] }> {
     return this.http.get<{ allProducts: IProduct[] }>('http://localhost:3000/api/v1.1.0/product');
+  }
+
+  getAllProductsToUser(): Observable<{ allUserProducts: IProduct[] }> {
+    return this.http.get<{ allUserProducts: IProduct[] }>('http://localhost:3000/api/v1.1.0/product/user');
   }
 
   addNewProduct(product: IProductNew): Observable<IStandartResponse> {
@@ -115,6 +123,10 @@ export class ApiService {
 // Companies
   getAllCompaniesToAdmin(): Observable<{ allCompanies: ICompany[] }> {
     return this.http.get<{ allCompanies: ICompany[] }>('http://localhost:3000/api/v1.1.0/company');
+  }
+
+  getCompanyById(companyId: number): Observable<ICompany> {
+    return this.http.get<ICompany>(`http://localhost:3000/api/v1.1.0/company/${companyId}`);
   }
 
 // Subscription
