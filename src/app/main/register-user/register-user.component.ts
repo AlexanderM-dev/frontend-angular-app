@@ -79,6 +79,7 @@ export class RegisterUserComponent implements OnInit {
         this.clearInputs();
         setTimeout(() => {
           this.success = false;
+          this.submitted = false;
         }, 2000);
       },
       error: (err) => {
