@@ -4,7 +4,7 @@ import { LoginComponent } from './login-component/login.component';
 import { RegisterComponent } from './register-component/register.component';
 import { AuthGuard } from './services/auth.guard';
 
-let routes: Routes =[];
+let routes: Routes = [];
 
 if (localStorage.getItem('token')) {
   routes = [
